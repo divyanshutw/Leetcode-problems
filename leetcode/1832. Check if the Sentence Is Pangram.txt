@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool checkIfPangram(string s) {
+        bool p[26];
+        int i,t=0;
+        memset(p,false,sizeof(p));
+        for(i=0;i<s.length();i++){
+            if(p[s[i]-97] == false){
+                t++;
+                if(t == 26){
+                    return true;
+                }
+            }
+            p[s[i]-97] = true;
+        }
+        return false;
+    }
+};

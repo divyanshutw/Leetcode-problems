@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int longestPalindrome(string s) {
+        int i,l=0;
+        bool isOddDone = false;
+        int m[52];
+        memset(m,0,sizeof(m));
+        for(i=0;i<s.length();i++){
+            if(s[i]>='a' && s[i]<='z'){
+                m[s[i]-97]++;
+            }
+            else{
+                m[s[i]-39]++;
+            }
+        }
+        for(i=0;i<52;i++){
+            if(m[i]%2 == 0){
+                l += m[i];
+            }
+            else if(!isOddDone){
+                l += m[i];
+                isOddDone = true;
+            }
+            else{
+                l += m[i]-1;
+            }
+        }
+        return l;
+    }
+};

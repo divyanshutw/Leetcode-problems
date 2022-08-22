@@ -1,0 +1,37 @@
+class Solution {
+public:
+    string toGoatLatin(string s) {
+        string w = "", s1;
+        int i,h=0,j=1;
+        for(i=0;i<s.length();i++){
+            if(s[i] == ' '){
+                h = i+1;
+                s1 += goatLatin(w, j++) + ' ';
+                w = "";
+            }
+            else{
+                w += s[i];
+            }
+        }
+        h = i+1;
+        s1 += goatLatin(w, j++);
+        return s1;
+    }
+    string goatLatin(string w, int j){
+        char vowels[] = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+        int i;
+        for(i=0;i<10;i++){
+            if(vowels[i] == w[0]){
+                break;
+            }
+        }
+        if(i == 10){
+            w = w.substr(1, w.length()) + w[0];
+        }
+        w += "ma";
+        for(i=0;i<j;i++){
+            w += 'a';
+        }
+        return w;
+    }
+};

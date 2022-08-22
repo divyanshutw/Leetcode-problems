@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& p) {
+        int i,j,max=-99999999,n=p.size();
+        int minAr[n],maxAr[n];
+        minAr[0] = p[0];
+        maxAr[n-1] = p[n-1];
+        for(i=1;i<n;i++){
+            minAr[i] = p[i]<minAr[i-1]?p[i]:minAr[i-1];
+        }
+        for(i=n-2;i>=0;i--){
+            maxAr[i] = p[i]>maxAr[i+1]?p[i]:maxAr[i+1];
+            if(maxAr[i]-minAr[i] > max){
+                max = maxAr[i]-minAr[i];
+            }
+        }
+        if(maxAr[n-1]-minAr[n-1]>max){
+            max = maxAr[n-1]-minAr[n-1];
+        }
+        return max;
+    }
+};
