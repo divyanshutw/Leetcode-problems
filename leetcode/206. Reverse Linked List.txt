@@ -1,0 +1,54 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+//         Iterative solution.    T.C. = O(n^2)
+    /*ListNode* reverseList(ListNode* head) {        
+        if(head == NULL || head->next == NULL)
+            return head;
+        ListNode* ptr, *preptr, *revHead = NULL, *revTail = NULL;
+        while(revTail != head){
+            ptr = head;
+            preptr = head;
+            while(ptr->next != NULL){
+                preptr = ptr;
+                ptr = ptr->next;
+            }
+            ptr->next = preptr;
+            preptr->next = NULL;
+            if(revHead == NULL){
+                revHead = ptr;
+            }
+            revTail = ptr;
+        }
+        return revHead;
+        
+        
+    }*/
+    
+//     Recursive solution.    T.C = O(n)
+    ListNode  *revHead = NULL;
+    ListNode* reverse(ListNode* head){
+        if(head == NULL || head->next == NULL){
+            revHead = head;
+            return head;
+        }
+        ListNode *ptr = reverse(head->next);
+        ptr->next = head;
+        return head;
+    }
+    ListNode* reverseList(ListNode* head) {  
+        reverse(head);
+        if(head != NULL)
+        head->next = NULL;
+        return revHead;
+    }
+};

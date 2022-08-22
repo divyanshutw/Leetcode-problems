@@ -1,0 +1,48 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    
+    //Using set
+    ListNode *detectCycle(ListNode *head) {
+        set<ListNode*> flags;
+        ListNode* ptr = head;
+        while(ptr != NULL){
+            int n = flags.size();
+            flags.insert(ptr);
+            if(flags.size() == n){
+                return ptr;
+            }
+            ptr = ptr->next;
+        }
+        return NULL;
+    }
+    
+    //Using map
+    /*
+    ListNode *detectCycle(ListNode *head) {
+        map<ListNode*,bool> flags;
+        ListNode* ptr = head;
+        while(ptr != NULL){
+            //int n = flags.size();
+            //flags.insert(ptr);
+            if(flags.find(ptr) != flags.end()){
+                return ptr;
+            }
+            else{
+                flags[ptr] = true;
+            }
+            ptr = ptr->next;
+        }
+        return NULL;
+    }
+    */
+    
+    //Using vector, a logic can be made similarly but it will take way more time.
+};

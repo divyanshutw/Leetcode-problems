@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int pivotIndex(vector<int>& m) {
+        int i,ls=0,rs=0;
+        for(i=0;i<m.size();i++){
+            rs += m[i];
+        }
+        rs -= m[0];
+        if(rs == 0)
+            return 0;
+        for(i=1;i<m.size();i++){
+            ls += m[i-1];
+            rs -= m[i];
+            if(ls == rs)
+                return i;
+        }
+        return -1;
+    }
+};
