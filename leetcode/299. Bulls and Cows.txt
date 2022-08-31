@@ -1,0 +1,21 @@
+class Solution {
+public:
+    string getHint(string s, string g) {
+        int i,j,b=0,c=0,fs[10],fg[10];
+        memset(fs,0,sizeof(fs));
+        memset(fg,0,sizeof(fg));
+        for(i=0;i<s.length();i++){
+            if(s[i] == g[i]){
+                b++;
+            }
+            else{
+                fs[s[i]-48]++;
+                fg[g[i]-48]++;
+            }
+        }
+        for(i=0;i<10;i++){
+            c += fs[i]<fg[i]?fs[i]:fg[i];
+        }
+        return to_string(b) + "A" + to_string(c) + "B";
+    }
+};

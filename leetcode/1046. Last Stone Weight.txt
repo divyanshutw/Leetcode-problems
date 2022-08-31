@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int lastStoneWeight(vector<int>& m) {
+        // Using heap: T.C. = O((n^2)*logn)
+        // int i,a,b;
+        // while(m.size() > 1){
+        //     make_heap(m.begin(),m.end());
+        //     a = m[0];
+        //     m.erase(m.begin());
+        //     make_heap(m.begin(),m.end());
+        //     b = m[0];
+        //     m.erase(m.begin());
+        //     if(a != b){
+        //         a = a-b;
+        //         m.push_back(a);
+        //         push_heap(m.begin(),m.end());
+        //     }
+        // }
+        // return m.size()>0 ? m[0] : 0;
+        
+        
+        // Intuitive approach: T.C. = O(nlogn + n^2)
+        int i,j,a,b;
+        sort(m.begin(),m.end());
+        while(m.size() > 1){
+            a = m[m.size()-1];
+            m.pop_back();
+            b = m[m.size()-1];
+            m.pop_back();
+            if(a != b){
+                a = a-b;
+                if(m.size() > 0 && a > m[m.size()-1]){
+                    m.push_back(a);
+                }
+                else{
+                    for(i=0;i<m.size();i++){
+                        if(m[i] > a){
+                            break;
+                        }
+                    }
+                    m.insert(m.begin()+i, a);
+                }
+            }
+        }
+        return m.size()>0 ? m[0] : 0;
+    }
+};

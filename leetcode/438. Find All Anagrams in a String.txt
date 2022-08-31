@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> v;
+        if(s.length() < p.length()){
+            return v;
+        }
+        int i,j,n=p.length(),fs[26],fp[26];
+        memset(fs,0,sizeof(fs));
+        memset(fp,0,sizeof(fp));
+        for(i=0;i<n;i++){
+            fs[s[i]-97]++;
+            fp[p[i]-97]++;
+        }
+        for(j=0;j<26;j++){
+            if(fs[j] != fp[j]){
+                break;
+            }
+        }
+        if(j == 26){
+            v.push_back(0);
+        }
+        for(i=n;i<s.length();i++){
+            fs[s[i]-97]++;
+            fs[s[i-n]-97]--;
+            for(j=0;j<26;j++){
+                if(fs[j] != fp[j]){
+                    break;
+                }
+            }
+            if(j == 26){
+                v.push_back(i-n+1);
+            }
+        }
+        return v;
+    }
+};

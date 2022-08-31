@@ -1,0 +1,67 @@
+class Solution {
+public:
+    string decodePart(string s, int k){
+        string h="";
+        int i,j;
+        for(j=0;j<k;j++){
+            for(i=0;i<s.length();i++){
+                h += s[i];
+            }
+        }
+        return h;
+    }
+    string decodeString(string s) {
+        stack<string> st;
+        int i;
+        for(i=0;i<s.length();i++){
+            if(!st.empty())
+            cout<<st.top()<<"  ";
+            if(s[i] == ']'){
+                string ens = st.top();
+                st.pop();
+                st.pop();
+                string k = st.top();
+                st.pop();
+                string res = decodePart(ens,stoi(k));
+                if(st.empty() || !(st.top()[st.top().length()-1]>='a' && st.top()[st.top().length()-1]<='z')){
+                    st.push(res);
+                }
+                else{
+                    string h = st.top();
+                    st.pop();
+                    st.push(h + res);
+                }
+            }
+            
+            else if(s[i]>='a' && s[i]<='z'){
+                if(st.empty() || !(st.top()[st.top().length()-1]>='a' && st.top()[st.top().length()-1]<='z')){
+                    string h(1,s[i]);
+                    st.push(h);
+                }
+                else{
+                    string h = st.top();
+                    st.pop();
+                    st.push(h + s[i]);
+                }
+            }
+            
+            else if(s[i]>='0' && s[i]<='9'){
+                if(st.empty() || !(st.top()[st.top().length()-1]>='0' && st.top()[st.top().length()-1]<='9')){
+                    string h(1,s[i]);
+                    st.push(h);                }
+                else{
+                    string h = st.top();
+                    st.pop();
+                    st.push(h + s[i]);
+                }
+            }
+            
+            else if(s[i] == '['){
+                string h(1,s[i]);
+                st.push(h);
+            }
+        }
+    
+        return st.top();
+    }
+};

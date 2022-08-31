@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& m, int target) {
+        map<int,int> ind;
+        int i;
+        for(i=0;i<m.size();i++){
+            ind[m[i]] = i;
+        }
+        for(i=0;i<m.size();i++){
+            if(ind.find(target-m[i]) != ind.end() && ind[target-m[i]] != i){
+                vector<int> v{i,ind[target-m[i]]};
+                return v;
+            }
+        }
+        return m;
+    }
+};

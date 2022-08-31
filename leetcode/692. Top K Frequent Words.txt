@@ -1,0 +1,29 @@
+class Solution {
+public:
+    static bool comp(pair<string, int>& a,pair<string, int>& b)
+    {
+        if(a.second != b.second)
+        return a.second > b.second;
+        return a.first.compare(b.first) < 0;
+    }
+    vector<string> topKFrequent(vector<string>& w, int k) {
+        map<string,int> freq;
+        vector<string> ans;
+        int i;
+        for(i=0;i<w.size();i++){
+            if(freq.find(w[i]) != freq.end()){
+                freq[w[i]] ++;
+            }
+            else{
+                freq[w[i]] = 1;
+            }
+        }
+        
+        vector<pair<string,int>> v(freq.begin(),freq.end());
+        sort(v.begin(), v.end(), comp);
+        for(i=0;i<k;i++){
+            ans.push_back(v[i].first);
+        }
+        return ans;
+    }
+};
