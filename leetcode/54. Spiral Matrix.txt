@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& m) {
+        int i,j,k,r=m.size(),c=m[0].size(),loops=ceil(min(r/2.0,c/2.0));
+        vector<int> ans;
+        for(k=0;k<loops;k++){
+            for(i=k;i<c-k;i++){
+                ans.push_back(m[k][i]);
+            }
+            for(i=k+1;i<r-k;i++){
+                ans.push_back(m[i][c-k-1]);
+            }
+            for(i=c-k-2;i>=k && r-k-1>k;i--){
+                ans.push_back(m[r-k-1][i]);
+            }
+            for(i=r-k-2;i>=k+1 && c-k-1>k;i--){
+                ans.push_back(m[i][k]);
+            }
+        }
+        return ans;
+    }
+};

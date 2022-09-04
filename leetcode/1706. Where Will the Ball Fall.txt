@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> findBall(vector<vector<int>>& g) {
+        int i,j,left,right,r=g.size(),c=g[0].size();
+            vector<int> v(c);
+        for(i=0;i<v.size();i++){
+            v[i] = i;
+        }
+        for(i=0;i<r;i++){
+            for(j=0;j<c;j++){
+                cout<<endl;
+                if(v[j] == -1){
+                    continue;
+                }
+                left = v[j]==0 ? 1 : g[i][v[j]-1];
+                right = v[j]==c-1 ? -1 : g[i][v[j]+1];
+                if(g[i][v[j]] == 1 && right == -1 || g[i][v[j]] == -1 && left == 1){
+                    v[j] = -1;
+                }
+                else if(g[i][v[j]] == 1 && right == 1){
+                    v[j] = v[j]+1;
+                }
+                else{
+                    v[j] = v[j]-1;
+                }
+            }
+        }
+        return v;
+    }
+};

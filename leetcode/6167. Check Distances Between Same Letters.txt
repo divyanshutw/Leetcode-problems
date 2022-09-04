@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool checkDistances(string s, vector<int>& distance) {
+        int i,m[26];
+        memset(m,-1,sizeof(m));
+        for(i=0;i<s.length();i++){
+            if(m[s[i]-97] == -1){
+                m[s[i]-97] = i;
+            }
+            else{
+                m[s[i]-97] = i - m[s[i]-97] - 1;
+            }
+        }
+        for(i=0;i<26;i++){
+            if(m[i] != -1 && m[i] != distance[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+}; 
