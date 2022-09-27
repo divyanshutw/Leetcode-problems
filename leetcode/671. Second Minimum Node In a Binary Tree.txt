@@ -1,0 +1,77 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* getEqual(TreeNode* root){
+        return root->left->val == root->val ? root->left : root->right;
+    }
+    TreeNode* getNonEqual(TreeNode* root){
+        return root->left->val == root->val ? root->right : root->left;
+    }
+    int min3(int a,int b,int c){
+        return a<b?(a<c?a:c):(b<c?b:c);
+    }
+    int max = 9999999999;
+    int min1;
+    long ans = 9999999999;
+    int findSecondMinimumValue1(TreeNode* root) {
+        TreeNode* ec, *nec;
+        if(root == NULL){
+            return max;
+        } 
+        if(root->left == NULL && root->right == NULL){
+            return max;
+        }
+        ec = getEqual(root);
+        nec = getNonEqual(root);
+                
+        if(ec->left == NULL && ec->right == NULL){
+            if(ec->val == nec->val){
+                return max;
+            }
+            return nec->val;
+        }
+        if(ec->left->val == ec->right->val){  
+            if(nec->left->val == nec->right->val){
+                return min(min(findSecondMinimumValue1(getEqual(ec)), findSecondMinimumValue1(getNonEqual(ec))),
+                          min(findSecondMinimumValue1(getEqual(nec)), findSecondMinimumValue1(getNonEqual(nec))));
+            }
+                return min3(findSecondMinimumValue1(getEqual(ec)), findSecondMinimumValue1(getNonEqual(ec)),nec->val);
+            }
+        if(getNonEqual(ec)->val < nec->val){
+            return min(getNonEqual(ec)->val, findSecondMinimumValue1(ec));
+        }
+        else{
+            return min(nec->val, findSecondMinimumValue1(ec));
+        }
+    }
+    void dfs(TreeNode* root){
+        if (root != NULL) {
+            if (min1 < root->val && root->val < ans) {
+                ans = root->val;
+            } else if (min1 == root->val) {
+                dfs(root->left);
+                dfs(root->right);
+            }
+        }
+    }
+    int findSecondMinimumValue(TreeNode* root) {
+        // int a = findSecondMinimumValue1(root);
+        min1 = root->val;
+        dfs(root);
+        int a = ans;
+        if(a == max){
+            return -1;
+        }
+        return a;
+    }
+};

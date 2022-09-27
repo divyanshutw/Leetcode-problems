@@ -1,0 +1,39 @@
+ class Solution {
+public:
+    int longestPalindrome(vector<string>& w) {
+        map<string,int> freq;
+        int i,t=0,n;
+        bool oddFlag = false;
+        string rev;
+        for(i=0;i<w.size();i++){
+            if(freq.find(w[i]) != freq.end()){
+                freq[w[i]] =freq[w[i]]+1;
+            }
+            else{
+                freq[w[i]] = 1;
+            }
+        }
+        for(pair<string,int> p:freq){
+            if(p.second == 0)
+                continue;
+            rev = string(1,p.first[1])+p.first[0];
+            if(freq.find(rev) != freq.end()){
+                n = p.second < freq[rev] ? p.second : freq[rev];
+                if(rev[0] == rev[1]){
+                    if(n%2 == 0 || oddFlag){
+                        t += n/2*4;
+                    }
+                    else{
+                        t += n*2;
+                        oddFlag = true;
+                    }
+                }
+                else
+                    t += n*4;
+                p.second = 0;
+                freq[rev] = 0;
+            }
+        }
+        return t;
+    }
+};
