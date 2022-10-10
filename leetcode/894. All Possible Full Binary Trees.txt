@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<TreeNode*> allPossibleFBT(int n) {
+        vector<TreeNode*> v[21];
+        vector<TreeNode*> v1;
+        v[0] = v1;
+        TreeNode* root = new TreeNode;
+        root->val = 0;
+        root->left = NULL;
+        root->right = NULL;
+        v[1].push_back(root);
+        int i,j,k,l;
+        for(i=2;i<=20;i++){
+            if(i%2 == 0){
+                v[i] = v1;
+            }
+            else{
+                for(j=1;j<i-1;j++){
+                    if(!v[i-1-j].empty()){
+                        for(k=0;k<v[j].size();k++){
+                            for(l=0;l<v[i-1-j].size();l++){
+                                root = new TreeNode;
+                                root->val = 0;
+                                root->left = v[j][k];
+                                root->right = v[i-1-j][l];
+                                v[i].push_back(root);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return v[n];
+    }
+};
